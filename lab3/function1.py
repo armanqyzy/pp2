@@ -5,10 +5,13 @@
   Create a function to convert grams to ounces.
      ounces = 28.3495231 * grams
 """
-def converter(grams):
-    ounces = grams * 28.3495231 
-    print(ounces)
+def converter(g):
+    ounces = g * 28.3495231 
+    return ounces
 
+gram=float(input())
+s=converter(gram)
+print(s)
 
 """
 2) 
@@ -20,10 +23,11 @@ def converter(grams):
 
 """
 def temp(F):
-    C = (5 / 9) * (far - 32)
+    C = (5 / 9) * (F - 32)
     print(C)
 
-
+t_f=float(input())
+temp(t_f)
 
 """
 3)
@@ -48,19 +52,19 @@ def solve(numheads, numlegs):
 # 2numheads - 2y = numlegs - 4y
 # 2y = numlegs - 2numheads
     y = (numlegs - 2*numheads)/2
-    x = numheads - (numlegs - 2*numheads)
-    print(x, y)
+    x = numheads -y
     
+    print(f"Chickens: {x}, Rabbits: {y}")
 
 
 """
 4)
 You are given list of numbers separated by spaces.
-Write a function filter_prime which will take
+Write a function filter which will take
 list of numbers as an agrument and returns
 only prime numbers from the list.
 """
-def prime(n):
+def isprime(n):
     if n < 2:
         return False
     for i in range(2, n):
@@ -68,39 +72,35 @@ def prime(n):
             return False
     return True
 
-def filter_prime(numbers):
-    prime_numbers = []
-    for num in numbers:
-        if is_prime(num):
-            prime_numbers.append(num)
-    return prime_numbers
-result = filter_prime(numbers_list)
-print(result)
+def filter(num):
+    return[n for n in num if isprime(n)]
 
+a = input()
+a_list=[int(n) for n in a.split()]
+
+prime=filter(a_list)
+print(prime)
 
 
 
 
 """
-5) 
+5)  
     Write a function that accepts string
     from user and print all permutations of 
     that string.
 """
-def permutations(s):
-    def p(data, i, length):
-        if i==length:
-            print("".join(data))
-        else: 
-            for j in range(i, length):
-                data[i], data[j]=data[j], data[i]
-                p(data, i+1, length)
-                data[i], data[j]=data[j], data[i]
 
-    p(list(s), 0, len(s))
+from itertools import permutations
 
+def permutat(n):
+    all=permutations(n)
+    return list(arr)
 
+word=input()
+result=permutat(word)
 
+print(result)
 
 """
 6)
@@ -115,7 +115,9 @@ def reverse(i):
     for j in i:
         s=s+j+''
     print(s)
-
+w=input()
+rev=reverse(w)
+print(rev)
 """
 7)
 Given a list of ints, 
@@ -130,12 +132,16 @@ has_33([1, 3, 1, 3]) → False
 has_33([3, 1, 3]) → False
 
 """
-def contain(s):
-    for i in range(len(s)-1):
-        if s[i]==3 and s[i+1]==3:
+def has_33(nums):
+    for i in range(len(nums)-1):
+        if nums[i]==3 and nums[i+1]==3:
             return True
     return False
 
+li=input()
+a_l=[int(nums) for nums in li.split()]
+result=has_33(a_l)
+print (result)
 """
 8)
 Write a function that takes in a list of integers 
@@ -166,11 +172,11 @@ Write a function that computes
  the volume of a sphere given its radius.
 
 """
-import math
-def compute(radius):
-    volume = math.pi*pow(radius, 2)
-    print(volume)
-
+def volume(sphere):
+    return (4/3)*3.14*(r**3)
+r=float(input())
+result=volume(r)
+print(result)
 
 """
 10)
@@ -179,13 +185,17 @@ returns a new list with unique unique of the first list.
 
 Note: don't use collection set.
 """
-def list(n):
+def removing(n):
     unique = []
     for element in n:
         if element not in unique:
             unique.append(element)
     return unique
 
+a=input()
+l=[int(n) for n in a.split()]
+r=removing(l)
+print(r)
 
 """
 11)
@@ -201,6 +211,10 @@ def ispalindrome(s):
     if s==s[-1::-1]:
         return True
     return False
+
+a=input()
+r=ispalindrome(a)
+print(r)
 """
 12)
 Define a functino histogram() that takes a list
@@ -213,11 +227,13 @@ Define a functino histogram() that takes a list
 *******
 
 """
-def histogram(list):
-    for i in list:
-        for j in range(i):
-            print("*", end="")
-        print()
+def histogram(n):
+    for i in n:
+        print("*"*i)
+a=input()
+l=[int(n) for n in a.split()]
+r=histogram(l)
+print(r)
 
 
 """
@@ -244,37 +260,26 @@ Take a guess.
 Good job, KBTU! You guessed my number in 3 guesses!
 """
 import random
-def guess_the_number():
-    secret_number = random.randint(1, 20)
+
+def guess_number():
     print("Hello! What is your name?")
-    name = input()
-    print(f"Well, {name}, I am thinking of a number between 1 and 20.")
-    num_guesses = 0
+    player_name = input()
+    print(f"Well, {player_name}, I am thinking of a number between 1 and 20.")
+
+    target_number = random.randint(1, 20)
+    attempts = 0
+
     while True:
-        try:
-            guess = int(input("Take a guess: "))
-            num_guesses += 1
-            if guess < secret_number:
-                print("Your guess is too low.")
-            elif guess > secret_number:
-                print("Your guess is too high.")
-            else:
-                print(f"Good job, {name}! You guessed my number in {num_guesses} guesses!")
-                break
-        except ValueError:
-            print("Please enter a valid number between 1 and 20.")
+        print("Take a guess.")
+        guess = int(input())
+        attempts += 1
 
-            
-if __name__ == "__main__":
-    guess_the_number()
+        if guess > target_number:
+            print("Your guess is too high.")
+        elif guess < target_number:
+            print("Your guess is too low.")
+        else:
+            print(f"Good job, {player_name}! You guessed my number in {attempts} guesses!")
+            break
 
-
-"""
-14)
-Create a python file and import some of the functions 
-from the above 13 tasks and try to use them.
-"""
-from fun13 import guess_the_number
-
-if __name__ == "__main__":
-    guess_the_number()
+guess_number()

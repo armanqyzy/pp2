@@ -61,17 +61,18 @@ movies = [
  "name" : "We Two", "imdb" : 7.2, "category" : "Romance"
  }
 ]
-
+print("1:")
 """
 1)Write a function that takes a single movie 
 and returns True if its IMDB score is above 5.5
 """
-def MoviesCategory(movie_list):
+def morethan(movie):
     return [movie["imdb"] > 5.5 for movie in movies]
-result = MoviesCategory(movies)
+result = morethan(movies)
 print(result)
              
- 
+print("2:")
+
 """
 2)
 Write a function that returns a sublist of 
@@ -80,10 +81,12 @@ movies with an IMDB score above 5.5.
  
 def Score(movie_list): 
     return [movie for movie in movies if movie["imdb"] > 5.5]
-scorem = score(movies)
+
+scorem = Score(movies)
 for movie in scorem:
     print(movie["name"])
 
+print("3:")
 
 """
 3)
@@ -92,78 +95,67 @@ and returns just those movies under that category.
 """
 
 def Categ(category): 
-    for i in movies: 
-        if i["category"]==category: 
-            print(i["name"]) 
+    category_movies = [movie["name"] for movie in movies if movie["category"] == category]
+    return category_movies
+
 cat=input()
 result=Categ(cat)
 print(result)
+
+print("4:")
 
 """
 4)
 Write a function that takes a list of movies 
 and computes the average IMDB score.
 """
-
-a = [name.strip() for name in input().split(',')]
-
-def score(movies, a):
+def calc(movie_list, mov):
     sum = 0
     c = 0
-    
-    for name in a:
-        for movie in movies:
-            if movie["name"] == name:
+
+    for movie_name in mov:
+        for movie in movie_list:
+            if movie["name"] == movie_name:
                 sum += movie["imdb"]
-                c+= 1
-    
+                c += 1
+
     if c > 0:
         average_score = sum / c
         print(average_score)
     else:
-        print("wring movie")
+        print("No valid movies provided")
 
-score(movies, a)
+mov = [name.strip() for name in input().split(',')]
+calc(movies, mov)
 
+
+
+print("5:")
 
 """
 5)
 Write a function that takes a category and 
 computes the average IMDB score.
 """
-def Categ(category): 
+def category_mm(category): 
     sum = 0
     c = 0
 
     for movie in movies: 
-        if movie["category"] == category: 
+        if movie["category"].lower() == category.lower(): 
             sum += movie["imdb"]
             c += 1
     
-    if c > 1:
+    if c > 0:
         full = sum / c
         return full
     else:
         return None
     
-cat = input()
-result = Categ(cat)
+cat = input().strip().lower()
+result = category_mm(cat)
 
 if result is not None:
     print(result)
 else:
     print("wrong category")
-
-    
-
-# tirex type
-# if else , stroka pustaya ili net, ne ispolsya str==100
-x=input()
-if len(x)=='':
-    print("YES")
-else:
-    print("NO")
-
-# length
-# bool
-

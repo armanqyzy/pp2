@@ -6,15 +6,19 @@ Define a class which has at least two methods:
 printString: 
      to print the string in upper case.
 """
+print("1")
 class two_classes():
-    def getString(n):
-        n.name = input()
-    def printString(n):
-        print(n.name.upper())
-hola = twoclasses()
-hola.getString()
-hola.printString()
+    def getString(self):
+        self.name = input()
 
+    def printString(self):
+        print(self.name.upper())
+
+b = two_classes()
+b.getString()
+b.printString()
+
+print("2")
 """
 2)
 Define a class named Shape and its subclass Square.
@@ -25,18 +29,25 @@ which takes a length as argument.
  which can print the area of the shape where 
  Shape's area is 0 by default.
 """
-class Shape():
-    def __init__(n):
-        n.Area=0
-class Square(Shape):
-    def __init__(n):
-        n.length=int(input())
-        n.Area=n.length*n.length
-        n.area()
-    def area(n):
-        print(n.Area)
-ex = Square()
+class Shape:
+    def __init__(self):
+        pass
 
+    def area(self):
+        return 0
+
+class Square(Shape):
+    def __init__(self, length):
+        super().__init__()
+        self.length=length
+
+    def area(self):
+        return self.length*self.length
+    
+if __name__=="__main__":
+    square=Square(int(input()))
+    print(square.area())
+print("3")
 """
 3)
 Define a class named Rectangle which inherits 
@@ -45,29 +56,37 @@ constructed by a length and width.
 The Rectangle class has a method which 
 can compute the area.
 """
-class Shape():
+class Shape:
+    def __init__(self):
+        pass
     def area(self):
-        self.Area=0
+        return 0
+
 class Square(Shape):
-    def __init__(self):
-        self.length=int(input())
-        self.Area=self.length*self.length
-        self.area()
+    def __init__(self, length):
+        super().__init__()
+        self.length = length
     def area(self):
-        print(self.Area)
+        return self.length*self.length
+
 class Rectangle(Shape):
-    def __init__(self):
-        self.length=int(input())
-        self.width=int(input())
-        self.Area=self.length*self.width
-        self.area()
+    def __init__(self, length, width):
+        super().__init__()
+        self.length = length
+        self.width = width
     def area(self):
-        print(self.Area)
+        return self.length * self.width
 
-ex = Rectangle()
+sL = float(input())
+s = Square(sL)
+print(s.area())
 
+rL = float(input())
+rW = float(input())
+r = Rectangle(rL, rW)
+print(r.area())
 
-
+print("4")
 """
 4)
 Write the definition of a Point class. 
@@ -79,11 +98,11 @@ Objects from this class should have a:
 """
 import math
 class Point():
-    def __init__(self):
-        self.x1=int(input())
-        self.y1=int(input())
-        self.x2=int(input())
-        self.y2=int(input())
+    def __init__(self, x1, y1, x2, y2):
+        self.x1=x1
+        self.y1=y1
+        self.x2=x2
+        self.y2=y2
         self.point_coordinates={self.x1:self.y1,}
         self.show()
         self.move()
@@ -95,7 +114,7 @@ class Point():
     def dist(self):
         self.distance=math.sqrt(pow((self.x2-self.x1), 2)+pow((self.y2-self.y1), 2))
         print(self.distance)
-ex = Point()
+ex = Point(int(input()), int(input()), int(input()), int(input()))
 
 """
 5)
@@ -108,72 +127,46 @@ and test to make sure the account can't be overdrawn.
 class Account:
     pass
 """
+print("5")
 class Account:
-    def __init__(self, owner, balance=0):
-        self.owner = owner
-        self.balance = balance
+    def __init__(self, owner, balance):
+        self.owner=owner
+        self.balance=balance
     def deposit(self, amount):
-        if amount > 0:
-            self.balance += amount
-            return f"Deposited ${amount}. New balance is ${self.balance}"
-        else:
-            return "Invalid deposit amount."
+        self.balance+=amount
+        print(f"deposit of {amount} accepted. New balance:{self.balance}")
     def withdraw(self, amount):
-        if amount > 0:
-            if amount <= self.balance:
-                self.balance -= amount
-                return f"Withdrew ${amount}. New balance is ${self.balance}"
-            else:
-                return "You're poor, you have no money"
+        if amount <= self.balance:
+            self.balance-=amount
+            print(f"withdraw of {amount} accepted. new balance:{self.balance}")
         else:
-            return "Invalid withdrawal amount."
-    def get_balance(self):
-        return f"Account balance for {self.owner}: ${self.balance}"
+            print("insufficient funds")
 
-owner_name = input("What is you're name? ")
-initial_balance = float(input("The initial balance: "))
-my_account = Account(owner_name, initial_balance)
+account = Account(input("owner is: "), abs(float(input("the balance is:"))))
 
-while True:
-    print("\nChoose an option:")
-    print("1. Deposit")
-    print("2. Withdraw")
-    print("3. Check Balance")
-    print("4. Exit")
-    
-    choice = input("What you wanna see? (1/2/3/4): ")
+account.deposit(float(input("write the amount u wanna deposit: ")))
+account.withdraw(float(input("write the amount u wanna withdraw:")))
 
-    if choice == "1":
-        amount = float(input("The deposit amount: "))
-        print(my_account.deposit(amount))
-    elif choice == "2":
-        amount = float(input("The withdrawal amount: "))
-        print(my_account.withdraw(amount))
-    elif choice == "3":
-        print(my_account.get_balance())
-    elif choice == "4":
-        print("Exiting your account.")
-        break
-
-
+print("6")
 """
 6)
 Write a program which can filter prime numbers in a list by using filter function. Note: Use lambda to define anonymous functions.
 """
-class Prime_Numbers:
-    def __init__(self,n):
-        self.n = n
-    def is_prime(self, n):
-        if (n>1):
-            for i in range(2,n):
-                if (n%i==0):
+class Prime:
+    def __init__(self, a):
+        self.a = a
+    def isPrime(self, a):
+        if (a>1):
+            for i in range(2,a):
+                if (a%i==0):
                     return False
             return True
         return False
-    def filter_primes(self):
-        return list(filter(lambda x: self.is_prime(x),self.n))
+
+    def filterPrimes(self):
+        return list(filter(lambda x: self.isPrime(x),self.a))
     
-arr = input()
-n = list(map(int, arr.split()))
-prime_filter = Prime_Numbers(n)
-print(prime_filter.filter_primes())
+b = input()
+a = list(map(int, b.split()))
+prF= Prime(a)
+print(prF.filterPrimes())
