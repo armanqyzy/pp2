@@ -13,7 +13,7 @@ pygame.init()
 
 #background vibe music
 pygame.mixer.music.load('img/tokyo_drift.mp3')
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(-1)
 
 
@@ -58,6 +58,8 @@ class Coin(pygame.sprite.Sprite):
         self.image = pygame.image.load("img/coin_gold_racer.png")
         self.rect = self.image.get_rect()
         self.reset()  # Initialize coin position
+        self.collect_sound = pygame.mixer.Sound('img/coins.mp3') 
+
 
     def reset(self):
         # Spawn the coin at a random position horizontally, above the screen
@@ -73,6 +75,8 @@ class Coin(pygame.sprite.Sprite):
     def coin_kill(self):
         # Randomly spawn the coin above the screen
         self.rect.center = (random.randint(0, SCREEN_WIDTH), 0)
+    def play_collect_sound(self):
+        self.collect_sound.play()  # Play the coins sound
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -155,7 +159,8 @@ while True:
     # Collision detection
     for coin in coins:
         if pygame.sprite.collide_rect(P1, coin):
-            POINTS += COIN_VALUE
+            POINTS += 50
+            coin.play_collect_sound()  # Play sound when the coins is collected
             coin.coin_kill()
 
     # Increase enemy speed when the player earns N coins
