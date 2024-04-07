@@ -1,5 +1,5 @@
 import pygame 
-import random
+import random, sys
 pygame.init()
 
 W, H = 1200, 800
@@ -18,6 +18,8 @@ pygame.mixer.music.set_volume(0.2)
 # Play music (you can also specify the number of loops)
 pygame.mixer.music.play(-1)  # -1 means looping indefinitely
 
+
+bonus_sound = pygame.mixer.Sound('img/bonus.wav')
 
 # Global variables
 is_paused = False
@@ -57,6 +59,7 @@ class Block:
     def handle_bonus(self):
         global paddleW
         paddleW += 20
+        bonus_sound.play()
         return True
 
     def hit(self):
@@ -313,6 +316,13 @@ while True:
         screen.fill((0, 0, 0))
         screen.blit(losetext, losetextRect)
         pygame.mixer.music.stop()
+        pygame.mixer.music.stop()
+
+        pygame.mixer.Sound('img/loser.wav').play()
+        pygame.display.update()
+        pygame.time.wait(2200)  # Wait 2.2 seconds before exiting the game
+        pygame.quit()
+        sys.exit()
 
 
     elif not any(block for block in block_list if not block.unbreakable):
@@ -320,6 +330,12 @@ while True:
         screen.fill((255, 255, 255))
         screen.blit(wintext, wintextRect)
         pygame.mixer.music.stop()
+
+        pygame.mixer.Sound('img/yay.mp3').play()
+        pygame.display.update()
+        pygame.time.wait(5000)  # Wait 5 seconds before exiting the game
+        pygame.quit()
+        sys.exit()
 
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT] and paddle.left > 0:
